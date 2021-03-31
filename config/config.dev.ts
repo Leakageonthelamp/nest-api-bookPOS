@@ -10,5 +10,9 @@ export const config = () => ({
     database: process.env.DB_DATABASE,
     entities: ['dist/**/**.entity{.ts,.js}'],
     synchronize: process.env.DB_SYNCHRONIZE,
+    migrations: ['dist/src/db/migrations/*.js'],
+    cli: {
+      migrationsDir: 'src/db/migrations',
+    },
   },
 });

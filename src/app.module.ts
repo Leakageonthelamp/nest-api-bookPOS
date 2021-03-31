@@ -9,6 +9,8 @@ import { AuthController } from './auth/auth.controller';
 import { AuthModule } from './auth/auth.module';
 import { UserController } from './users/user.controller';
 import { UserModule } from './users/user.module';
+import { BookController } from './books/book.controller';
+import { BookModule } from './books/book.module';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { config } = require(`./../config/config.${process.env.NODE_ENV}`);
@@ -22,8 +24,9 @@ const { config } = require(`./../config/config.${process.env.NODE_ENV}`);
     DatabaseModule,
     AuthModule,
     UserModule,
+    BookModule,
   ],
-  controllers: [AppController, AuthController, UserController],
+  controllers: [AppController, AuthController, UserController, BookController],
   providers: [
     {
       provide: APP_INTERCEPTOR,

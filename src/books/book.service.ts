@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BookRepository } from './repositories/book.repository';
 import { TBook } from './transforms/book.transform';
-import { AddNewBookDto } from './book.dto';
+import { AddNewBookDto, UpdateStockDto } from './book.dto';
 import { IGetBooks, ISuccessMessage } from './../common/interfaces/';
 import { plainToClass } from 'class-transformer';
 
@@ -27,11 +27,12 @@ export class BookService {
   }
 
   async addNewBook(data: AddNewBookDto): Promise<IGetBooks> {
-    const { name, author, price } = data;
+    const { name, author, price, stock } = data;
     const newBook = this.bookRepo.create({
       name,
       author,
       price,
+      stock,
     });
     const respone = await this.bookRepo.save(newBook);
     return plainToClass(TBook, respone)?.getBooks();
@@ -44,8 +45,22 @@ export class BookService {
       },
     });
 
-    book = { id: book.id, ...data, updated_at: new Date() };
+    book = { id: book.id, ...data };
     book = await this.bookRepo.save(book);
+
+    return plainToClass(TBook, book)?.getBooks();
+  }
+
+  async updateBookStock(
+    bookId: number,
+    data: UpdateStockDto,
+  ): Promise<IGetBooks> {
+    let book = await this.bookRepo.save({
+      id: bookId,
+      stock: data.updateStockQty,
+    });
+
+    book = await this.bookRepo.findOne({ where: { id: bookId } });
     return plainToClass(TBook, book)?.getBooks();
   }
 

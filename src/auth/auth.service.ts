@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../users/repositories/user.repository';
 
 import { JwtService } from '@nestjs/jwt';
-import { compareSync, hashSync } from 'bcrypt';
+import { compareSync, hashSync, genSalt } from 'bcrypt';
 import { RegisterUserDto, UserLoginDto } from './auth.dto';
 import { IAccessToken, IAuthPayload } from '../common/interfaces';
 import { UserService } from 'src/users/user.service';

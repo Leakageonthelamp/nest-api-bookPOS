@@ -17,4 +17,17 @@ export class AddNewBookDto {
   @IsPositive()
   @IsNotEmpty()
   price: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsPositive()
+  stock: number;
+}
+
+export class UpdateStockDto {
+  @ApiProperty()
+  @IsNumber()
+  @IsPositive()
+  @IsNotEmpty()
+  updateStockQty: number;
 }

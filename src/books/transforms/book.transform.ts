@@ -5,14 +5,16 @@ export class TBook {
   name: string;
   author: string;
   price: number;
-  created_at?: Date;
-  updated_at?: Date;
+  stock?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 
   getBooks(): IGetBooks {
     return {
       id: this.id,
       name: this.name,
       author: this.author,
+      stock: this.stock,
       price: this.price,
     };
   }

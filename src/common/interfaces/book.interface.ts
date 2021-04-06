@@ -3,4 +3,5 @@ export interface IGetBooks {
   name: string;
   author: string;
   price: number;
+  stock?: number;
 }

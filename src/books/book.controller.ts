@@ -7,6 +7,7 @@ import {
   Body,
   Put,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,7 +19,7 @@ import { ParseInt } from '../common/custom-decorators/';
 import { BookService } from './book.service';
 import { AuthGuard } from '@nestjs/passport';
 import { IGetBooks, ISuccessMessage } from '../common/interfaces';
-import { AddNewBookDto } from './book.dto';
+import { AddNewBookDto, UpdateStockDto } from './book.dto';
 
 @ApiTags('Book')
 @Controller()
@@ -54,6 +55,17 @@ export class BookController {
     @Body() data: AddNewBookDto,
   ): Promise<IGetBooks> {
     return this.bookService.updateBook(bookId, data);
+  }
+
+  @ApiOkResponse()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('Book/UpdateBookStock/:bookId')
+  updateStock(
+    @Param('bookId', ParseInt) bookId: number,
+    @Body() data: UpdateStockDto,
+  ): Promise<IGetBooks> {
+    return this.bookService.updateBookStock(bookId, data);
   }
 
   @ApiOkResponse()
